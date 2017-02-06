@@ -95,10 +95,10 @@ def C8(A1,A2,A3,A4,k1,k2,k3,k4,z1,z2,z3):
 
 def temperature(region,A,k):
     Q0 = region["Q"]*1000 # En W km^-2
-    z1 = np.arange(0,region["z1"])
-    z2 = np.arange(region["z1"],region["z2"])
-    z3 = np.arange(region["z2"],region["z3"])
-    z4 = np.arange(region["z3"],region["z4"])
+    z1 = np.arange(0,region["z1"]+1)
+    z2 = np.arange(region["z1"],region["z2"]+1)
+    z3 = np.arange(region["z2"],region["z3"]+1)
+    z4 = np.arange(region["z3"],region["z4"]+1)
 
     frot_grani=frottement(rho["Grani"], z1*1000)*(1e-6) # In MPa
     frot_metas=frottement(rho["Metas"], z2*1000)*(1e-6) # In MPa
@@ -129,10 +129,11 @@ def temperature(region,A,k):
     
     return np.hstack((z1, z2, z3, z4)), np.hstack((T_grani, T_metas, T_granu, T_perid)), np.hstack((dT_grani, dT_metas, dT_granu, dT_perid)), np.hstack((frot_grani, frot_metas, frot_granu, frot_perid)), np.hstack((flua_grani, flua_metas, flua_granu, flua_perid))
 
-
-fig1, ax1 = plt.subplots(2,2,figsize=(8,8))
-fig2, ax2 = plt.subplots(2,2,figsize=(8,8))
-fig3, ax3 = plt.subplots(2,2,figsize=(8,8))
+plt.rcParams['savefig.dpi'] = 72
+plt.rcParams['figure.dpi'] = 72
+fig1, ax1 = plt.subplots(2,2,figsize=(10,8))
+fig2, ax2 = plt.subplots(2,2,figsize=(10,8))
+fig3, ax3 = plt.subplots(2,2,figsize=(10,8))
 
 z, T, dT, fr, fl = temperature(Abitibi,A,k)
 ax1[0,0].plot(T,z,"k-",linewidth=2)
@@ -151,7 +152,7 @@ ax2[0,0].semilogx(fr2,z,'b-',label="Frottement",linewidth=2)
 ax2[0,0].semilogx(fl2,z,'g-',label="Fluage",linewidth=2)
 ax2[0,0].semilogx(fr,z,'b-',alpha=0.2)
 ax2[0,0].semilogx(fl,z,'g-',alpha=0.2)
-ax2[0,0].legend(fontsize=10, loc=4)
+ax2[0,0].legend(loc=4)
 ax1[0,0].axhline(y=Abitibi["z1"],color='grey',zorder=-1)
 ax1[0,0].axhline(y=Abitibi["z2"],color='grey',zorder=-1)
 ax1[0,0].axhline(y=Abitibi["z3"],color='grey',zorder=-1)
@@ -187,7 +188,7 @@ ax2[0,1].semilogx(fr2,z,'b-',label="Frottement",linewidth=2)
 ax2[0,1].semilogx(fl2,z,'g-',label="Fluage",linewidth=2)
 ax2[0,1].semilogx(fr,z,'b-',alpha=0.2)
 ax2[0,1].semilogx(fl,z,'g-',alpha=0.2)
-ax2[0,1].legend(fontsize=10, loc=4)
+ax2[0,1].legend(loc=4)
 ax1[0,1].axhline(y=Grenville["z1"],color='grey',zorder=-1)
 ax1[0,1].axhline(y=Grenville["z2"],color='grey',zorder=-1)
 ax1[0,1].axhline(y=Grenville["z3"],color='grey',zorder=-1)
@@ -222,7 +223,7 @@ ax2[1,0].semilogx(fr2,z,'b-',label="Frottement",linewidth=2)
 ax2[1,0].semilogx(fl2,z,'g-',label="Fluage",linewidth=2)
 ax2[1,0].semilogx(fr,z,'b-',alpha=0.2)
 ax2[1,0].semilogx(fl,z,'g-',alpha=0.2)
-ax2[1,0].legend(fontsize=10, loc=4)
+ax2[1,0].legend(loc=4)
 ax1[1,0].axhline(y=Appalaches["z1"],color='grey',zorder=-1)
 ax1[1,0].axhline(y=Appalaches["z2"],color='grey',zorder=-1)
 ax1[1,0].axhline(y=Appalaches["z3"],color='grey',zorder=-1)
@@ -257,7 +258,7 @@ ax2[1,1].semilogx(fr2,z,'b-',label="Frottement",linewidth=2)
 ax2[1,1].semilogx(fl2,z,'g-',label="Fluage",linewidth=2)
 ax2[1,1].semilogx(fr,z,'b-',alpha=0.2)
 ax2[1,1].semilogx(fl,z,'g-',alpha=0.2)
-ax2[1,1].legend(fontsize=10, loc=4)
+ax2[1,1].legend(loc=4)
 ax2[1,1].axhline(y=Cordillera["z1"],color='grey',zorder=-1)
 ax2[1,1].axhline(y=Cordillera["z2"],color='grey',zorder=-1)
 ax2[1,1].axhline(y=Cordillera["z3"],color='grey',zorder=-1)
@@ -278,5 +279,6 @@ ax2[1,1].invert_yaxis()
 fig1.tight_layout()
 fig2.tight_layout()
 fig3.tight_layout()
-
-    
+fig1.savefig("Q3A.pdf")
+fig2.savefig("Q3B.pdf")
+fig3.savefig("Q3C.pdf")

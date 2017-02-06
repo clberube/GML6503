@@ -14,7 +14,7 @@ dT_0 = 20*(1e-3) # C m^1
 k = 1.68 # W m^-1 C^-1 
 T_0 = 0 # C
 Z_eval = 40*(1e3) # m
-z = np.linspace(0,80,100)*1000 # z from 0 to 80, 100 points total
+z = np.linspace(0,50,100)*1000 # z from 0 to 80, 100 points total
     
 def gradient_thermique(A_0, z, k, dT_0, D=20*(1e3), a_cte=False):
     if a_cte:
@@ -37,31 +37,30 @@ grad_a = 1000*gradient_thermique(A_0,Z_eval,k,dT_0) # In C km^-1
 print temp_a, grad_a
 
 # Figures
-fig, ax = plt.subplots(1,2,figsize=(8,3))
-ax[0].plot(1000*gradient_thermique(A_0,z,k,dT_0,a_cte=True),z/1000,'-b')
-ax[0].plot(grad_a_cte,Z_eval/1000,'ok')
-ax[1].plot(temperature(A_0,z,k,dT_0,a_cte=True),z/1000,'-g')
-ax[1].plot(temp_a_cte,Z_eval/1000,'ok')
-ax[0].set_xlabel("Gradient thermique ($^o$C/km)")
-ax[1].set_xlabel("Temperature ($^o$C)")
-ax[0].set_ylabel("Profondeur (km)")
-ax[0].invert_yaxis(), ax[1].invert_yaxis()
+fig1, ax1 = plt.subplots(1,2,figsize=(8,3))
+ax1[0].plot(1000*gradient_thermique(A_0,z,k,dT_0,a_cte=True),z/1000,'-b')
+ax1[0].plot(grad_a_cte,Z_eval/1000,'ok')
+ax1[1].plot(temperature(A_0,z,k,dT_0,a_cte=True),z/1000,'-g')
+ax1[1].plot(temp_a_cte,Z_eval/1000,'ok')
+ax1[0].set_xlabel("Gradient thermique ($^o$C/km)")
+ax1[1].set_xlabel("Temperature ($^o$C)")
+ax1[0].set_ylabel("Profondeur (km)")
+ax1[0].invert_yaxis(), ax1[1].invert_yaxis()
 plt.legend()
-ax[0].set_title("$A = A_0 = 12.6 x 10 ^{-7} \/ W/m^3$")
-ax[1].set_title("$A = A_0 = 12.6 x 10 ^{-7} \/ W/m^3$")
+ax1[0].set_title("$A = A_0 = 12.6 x 10 ^{-7} \/ W/m^3$")
+ax1[1].set_title("$A = A_0 = 12.6 x 10 ^{-7} \/ W/m^3$")
 plt.tight_layout()
 
-fig, ax = plt.subplots(1,2,figsize=(8,3))
-ax[0].plot(1000*gradient_thermique(A_0, z, k, dT_0),z/1000,'-b')
-ax[0].plot(grad_a,Z_eval/1000,'ok')
-ax[1].plot(temperature(A_0,z,k,dT_0),z/1000,'-g')
-ax[1].plot(temp_a,Z_eval/1000,'ok')
-ax[0].set_xlabel("Gradient thermique ($^o$C/km)")
-ax[1].set_xlabel("Temperature ($^o$C)")
-ax[0].set_ylabel("Profondeur (km)")
-ax[0].invert_yaxis(), ax[1].invert_yaxis()
-ax[0].set_title("$A = A_0 e^{-z/D} \/ W/m^3$")
-ax[1].set_title("$A = A_0 e^{-z/D} \/ W/m^3$")
+fig2, ax2 = plt.subplots(1,2,figsize=(8,3))
+ax2[0].plot(1000*gradient_thermique(A_0, z, k, dT_0),z/1000,'-b')
+ax2[0].plot(grad_a,Z_eval/1000,'ok')
+ax2[1].plot(temperature(A_0,z,k,dT_0),z/1000,'-g')
+ax2[1].plot(temp_a,Z_eval/1000,'ok')
+ax2[0].set_xlabel("Gradient thermique ($^o$C/km)")
+ax2[1].set_xlabel("Temperature ($^o$C)")
+ax2[0].set_ylabel("Profondeur (km)")
+ax2[0].invert_yaxis(), ax2[1].invert_yaxis()
+ax2[0].set_title("$A = A_0 e^{-z/D} \/ W/m^3$")
+ax2[1].set_title("$A = A_0 e^{-z/D} \/ W/m^3$")
 plt.legend()
 plt.tight_layout()
-
